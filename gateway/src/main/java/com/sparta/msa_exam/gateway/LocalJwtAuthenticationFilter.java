@@ -11,10 +11,12 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.SecretKey;
+
 @Slf4j
 @Component
 public class LocalJwtAuthenticationFilter implements GlobalFilter {
@@ -33,7 +35,9 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
 
         if (token == null || !validateToken(token)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
+            throw new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED
+            );
         }
 
         return chain.filter(exchange);
