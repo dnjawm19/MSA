@@ -19,7 +19,7 @@ public class AddServerPortHeaderFilter extends AbstractGatewayFilterFactory<Obje
                 URI uri = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
                 if (uri != null) {
                     String port = String.valueOf(uri.getPort());
-                    exchange.getResponse().getHeaders().add("server-port", port);
+                    exchange.getResponse().getHeaders().add("Server-Port", port);
                 }
             }));
         };
