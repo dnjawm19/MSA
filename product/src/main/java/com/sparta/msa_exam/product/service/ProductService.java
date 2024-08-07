@@ -7,6 +7,7 @@ import com.sparta.msa_exam.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,5 +19,16 @@ public class ProductService {
     public ProductResDto create(ProductReqDto productReqDto) {
         Product product = productRepository.save(new Product(productReqDto));
         return new ProductResDto(product);
+    }
+
+    public List<ProductResDto> getList() {
+        List<Product> productList = productRepository.findAll();
+        List<ProductResDto> productResDtoList = new ArrayList<>();
+
+        for (Product product : productList) {
+            productResDtoList.add((new ProductResDto(product)));
+        }
+
+        return productResDtoList;
     }
 }
