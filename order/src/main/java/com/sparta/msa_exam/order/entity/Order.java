@@ -1,5 +1,6 @@
 package com.sparta.msa_exam.order.entity;
 
+import com.sparta.msa_exam.order.dto.OrderReqDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,4 +26,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> productIds = new ArrayList<>();
 
+    public Order(OrderReqDto orderReqDto) {
+        this.name = orderReqDto.getName();
+    }
 }
