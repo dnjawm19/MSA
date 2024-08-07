@@ -6,6 +6,7 @@ import com.sparta.msa_exam.order.dto.OrderResDto;
 import com.sparta.msa_exam.order.entity.Order;
 import com.sparta.msa_exam.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,12 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    @Cacheable
     public OrderResDto create(OrderReqDto orderReqDto) {
         Order order = orderRepository.save(new Order(orderReqDto));
         return new OrderResDto(order);
     }
 
-    @Cacheable(cacheNames = "OrderProductListCache", key = "args[0]")
+    @Cacheable(cacheNames = "orderProductListCache", key = "args[0]")
     public OrderProductListResDto getProductList(Long id) {
         Order order = existOrder(id);
         return new OrderProductListResDto(order);

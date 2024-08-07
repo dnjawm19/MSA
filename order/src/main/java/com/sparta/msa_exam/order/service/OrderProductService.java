@@ -9,6 +9,7 @@ import com.sparta.msa_exam.order.entity.OrderProduct;
 import com.sparta.msa_exam.order.repository.OrderProductRepository;
 import com.sparta.msa_exam.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class OrderProductService {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
 
+    @CacheEvict(cacheNames = "orderProductListCache", allEntries = true)
     public OrderProductResDto addProduct(Long orderId, OrderProductReqDto orderProductReqDto) {
         Order order = existOrder(orderId);
         existProduct(orderProductReqDto.getProduct_id());
@@ -28,7 +30,7 @@ public class OrderProductService {
         return new OrderProductResDto(orderProduct, order);
     }
 
-    private Order existOrder(Long orderId){
+    private Order existOrder(Long orderId) {
         return orderRepository.findById(orderId).orElseThrow(
             () -> new IllegalArgumentException("해당 주문이 존재하지 않습니다.")
         );
