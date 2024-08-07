@@ -1,10 +1,14 @@
-package com.sparta.msa_exam.product;
+package com.sparta.msa_exam.product.controller;
 
+import com.sparta.msa_exam.product.dto.ProductReqDto;
+import com.sparta.msa_exam.product.dto.ProductResDto;
+import com.sparta.msa_exam.product.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -14,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RefreshScope
 @RestController
-@RequestMapping("/product")
+@RequiredArgsConstructor
+@RequestMapping("/products")
 public class ProductController {
+
+    private final ProductService productService;
 
     @Value("${server.port}") // 애플리케이션이 실행 중인 포트를 주입받습니다.
     private String serverPort;
@@ -24,7 +31,12 @@ public class ProductController {
     private String message;
 
     @GetMapping
-    public String getProduct() {
-        return "Product detail from PORT : " + serverPort + " and message : " + this.message ;
+    public String get() {
+        return "Product detail from PORT : " + serverPort + " and message : " + this.message;
+    }
+
+    @PostMapping()
+    public ProductResDto create(@RequestBody ProductReqDto productReqDto) {
+        return productService.create(productReqDto);
     }
 }
