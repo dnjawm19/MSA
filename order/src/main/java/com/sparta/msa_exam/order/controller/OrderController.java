@@ -1,9 +1,6 @@
 package com.sparta.msa_exam.order.controller;
 
-import com.sparta.msa_exam.order.dto.OrderProductReqDto;
-import com.sparta.msa_exam.order.dto.OrderProductResDto;
-import com.sparta.msa_exam.order.dto.OrderReqDto;
-import com.sparta.msa_exam.order.dto.OrderResDto;
+import com.sparta.msa_exam.order.dto.*;
 import com.sparta.msa_exam.order.service.OrderProductService;
 import com.sparta.msa_exam.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +22,10 @@ public class OrderController {
     @PutMapping("/{orderId}")
     public OrderProductResDto addProduct(@PathVariable Long orderId, @RequestBody OrderProductReqDto orderProductReqDto) {
         return orderProductService.addProduct(orderId, orderProductReqDto);
+    }
+
+    @GetMapping("/{orderId}")
+    public OrderProductListResDto getProductList(@PathVariable Long orderId){
+        return orderService.getProductList(orderId);
     }
 }
