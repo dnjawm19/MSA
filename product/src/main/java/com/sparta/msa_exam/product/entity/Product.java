@@ -2,15 +2,14 @@ package com.sparta.msa_exam.product.entity;
 
 import com.sparta.msa_exam.product.dto.ProductReqDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -23,7 +22,7 @@ public class Product {
     @Column
     private int supply_price;
 
-    public Product(ProductReqDto productReqDto){
+    public Product(ProductReqDto productReqDto) {
         this.name = productReqDto.getName();
         this.supply_price = productReqDto.getSupply_price();
     }
