@@ -1,5 +1,7 @@
 package com.sparta.msa_exam.order.entity;
 
+import com.sparta.msa_exam.order.dto.OrderProductReqDto;
+import com.sparta.msa_exam.order.dto.OrderReqDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,4 +24,9 @@ public class OrderProduct {
 
     @Column
     private Long product_id;
+
+    public OrderProduct(Order order, OrderProductReqDto orderProductReqDto){
+        this.order = order;
+        this.product_id = orderProductReqDto.getProduct_id();
+    }
 }
