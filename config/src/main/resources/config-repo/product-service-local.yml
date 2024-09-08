@@ -1,4 +1,12 @@
 server:
-  port: 19083
+  port: 19093
 
-message: "product-service-local message"
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:13306/msa
+    username: msa
+    password: 11301300
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
